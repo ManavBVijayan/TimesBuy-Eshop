@@ -1,0 +1,54 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+
+{% block head %}
+<style>
+    .cat-list {
+        margin-top: 130px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid cat-list" style="margin-top:130px;">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="cat-list-title fw-semibold mb-4 text-center">CATEGORIES</h5>
+            <div class="table-responsive">
+                <table class="table" style="color:#0B1C39;font-family:'Josefin Sans', sans-serif;">
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in categories %}
+                        <tr>
+                            <th scope="row">{{ category.id }}</th>
+                            <td>
+                                <img src="{{ category.image.url }}" alt="{{ category.name }} Image" class="img-fluid" width="100" height="100">
+                            </td>
+                            <td>{{ category.name }}</td>
+                            <td>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="{% url 'edit-category' category.id %}" class="btn btn-warning btn-sm mr-2">EDIT</a>
+                                    {% if category.is_active %}
+                                    <a href="{% url 'category-disable' category.id %}" class="btn btn-danger btn-sm">DISABLE</a>
+                                    {% else %}
+                                    <a href="{% url 'category-enable' category.id %}" class="btn btn-primary btn-sm">ENABLE</a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
